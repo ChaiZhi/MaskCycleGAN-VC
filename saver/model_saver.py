@@ -113,7 +113,9 @@ class ModelSaver(object):
                 print("No checkpoint found. Failed to load load model checkpoint.")
                 return
 
-        checkpoint = torch.load(ckpt_path, map_location=self.args.gpu_ids[0])
+        print("debug: " + str(self.args.gpu_ids[0]))
+        checkpoint = torch.load(ckpt_path, map_location=torch.device('cpu'))
+        # checkpoint = torch.load(ckpt_path)
         model.load_state_dict(checkpoint['model_state'])
         if optimizer is not None:
             optimizer.load_state_dict(checkpoint['optimizer'])

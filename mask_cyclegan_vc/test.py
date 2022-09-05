@@ -13,6 +13,7 @@ from dataset.vc_dataset import VCDataset
 from mask_cyclegan_vc.utils import decode_melspectrogram
 from logger.train_logger import TrainLogger
 from saver.model_saver import ModelSaver
+from hifigan.inference import HifiGANCoder
 
 
 class MaskCycleGANVCTesting(object):
@@ -33,8 +34,9 @@ class MaskCycleGANVCTesting(object):
         self.speaker_A_id = args.speaker_A_id
         self.speaker_B_id = args.speaker_B_id
         # Initialize MelGAN-Vocoder used to decode Mel-spectrograms
-        self.vocoder = torch.hub.load(
-            'descriptinc/melgan-neurips', 'load_melgan')
+        self.vocoder = HifiGANCoder(path=None, github=True, model_name="a")
+        # self.vocoder = torch.hub.load(
+        #     'descriptinc/melgan-neurips', 'load_melgan')
         self.sample_rate = args.sample_rate
 
         # Initialize speakerA's dataset
